@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 {
 	if(argc!= 3) 
     {
-        printf("usage: struct_ <infile> <outfile>\n");
+        printf("usage: e_n <infile> <outfile>\n");
         return 0;
     }
     
