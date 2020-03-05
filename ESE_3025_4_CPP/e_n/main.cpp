@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 {
 	if(argc!= 3) 
     {
-        cout<<"usage: struct_ <infile> <outfile>"<<"\n";
+        cout<<"usage: e_n <infile> <outfile>"<<"\n";
         return 0;
     }
     int count = 0;
