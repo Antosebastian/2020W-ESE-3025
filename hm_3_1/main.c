@@ -70,7 +70,7 @@ int main()
       return 1;
     }
     pthread_join (player_1, NULL);
-    pthread_join (player_2, NULL);
+//    pthread_join (player_2, NULL);
     if(y > z)
         printf("\nplayer_2 is the winner with the binary search technique");
     else if(z > y)
