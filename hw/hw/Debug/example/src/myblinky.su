@@ -1,0 +1,5 @@
+myblinky.c:8:13:prvSetupHardware	8	static
+myblinky.c:15:13:vLEDTask1	24	static
+myblinky.c:31:13:vLEDTask2	24	static
+myblinky.c:46:13:vLEDTask3	24	static
+myblinky.c:61:5:main	24	static
