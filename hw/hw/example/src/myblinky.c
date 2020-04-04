@@ -63,7 +63,7 @@ int main(void)
 	prvSetupHardware();
 
 	xTaskCreate(vLEDTask1, (signed char *) "vTaskLed1",
-				configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+				configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 3UL),
 				(xTaskHandle *) NULL);
 
 	xTaskCreate(vLEDTask2, (signed char *) "vTaskLed2",
@@ -71,7 +71,7 @@ int main(void)
 				(xTaskHandle *) NULL);
 //
 	xTaskCreate(vLEDTask3, (signed char *) "vTaskLed3",
-					configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 1UL),
+					configMINIMAL_STACK_SIZE, NULL, (tskIDLE_PRIORITY + 2UL),
 					(xTaskHandle *) NULL);
 
 	vTaskStartScheduler();
