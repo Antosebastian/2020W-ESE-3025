@@ -82,13 +82,13 @@ int main(void)
 				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
 				(xTaskHandle *) NULL);
 
-	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed2",
-				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
-				(xTaskHandle *) NULL);
-
-	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed3",
-				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
-				(xTaskHandle *) NULL);
+//	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed2",
+//				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
+//				(xTaskHandle *) NULL);
+//
+//	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed3",
+//				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
+//				(xTaskHandle *) NULL);
 
 	vTaskStartScheduler();
 
