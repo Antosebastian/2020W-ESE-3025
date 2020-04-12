@@ -49,8 +49,12 @@
 #define JOYSTICK_RIGHT_GPIO_BIT_NUM             16
 #define JOYSTICK_PRESS_GPIO_PORT_NUM            0
 #define JOYSTICK_PRESS_GPIO_BIT_NUM             17
-#define LED0_GPIO_PORT_NUM                      0
+#define LED0_GPIO_PORT_NUM                      0	//red
 #define LED0_GPIO_BIT_NUM                       22
+#define LED1_GPIO_PORT_NUM                      3	//green
+#define LED1_GPIO_BIT_NUM                       25
+#define LED2_GPIO_PORT_NUM                      3	//blue
+#define LED2_GPIO_BIT_NUM                       26
 
 /*****************************************************************************
  * Public types/enumerations/variables
@@ -70,6 +74,8 @@ static void Board_LED_Init(void)
 	/* Pin PIO0_22 is configured as GPIO pin during SystemInit */
 	/* Set the PIO_22 as output */
 	Chip_GPIO_WriteDirBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM, true);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, LED1_GPIO_PORT_NUM, LED1_GPIO_BIT_NUM, true);
+	Chip_GPIO_WriteDirBit(LPC_GPIO, LED2_GPIO_PORT_NUM, LED2_GPIO_BIT_NUM, true);
 }
 
 /*****************************************************************************
@@ -134,6 +140,12 @@ void Board_LED_Set(uint8_t LEDNumber, bool On)
 	if (LEDNumber == 0) {
 		Chip_GPIO_WritePortBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM, On);
 	}
+	else if (LEDNumber == 1) {
+			Chip_GPIO_WritePortBit(LPC_GPIO, LED1_GPIO_PORT_NUM, LED1_GPIO_BIT_NUM, On);
+		}
+	else if (LEDNumber == 2) {
+			Chip_GPIO_WritePortBit(LPC_GPIO, LED2_GPIO_PORT_NUM, LED2_GPIO_BIT_NUM, On);
+		}
 }
 
 /* Returns the current state of a board LED */
@@ -144,6 +156,12 @@ bool Board_LED_Test(uint8_t LEDNumber)
 	if (LEDNumber == 0) {
 		state = Chip_GPIO_ReadPortBit(LPC_GPIO, LED0_GPIO_PORT_NUM, LED0_GPIO_BIT_NUM);
 	}
+	else if (LEDNumber == 1) {
+			state = Chip_GPIO_ReadPortBit(LPC_GPIO, LED1_GPIO_PORT_NUM, LED1_GPIO_BIT_NUM);
+		}
+	else if (LEDNumber == 2) {
+			state = Chip_GPIO_ReadPortBit(LPC_GPIO, LED2_GPIO_PORT_NUM, LED2_GPIO_BIT_NUM);
+		}
 
 	return state;
 }

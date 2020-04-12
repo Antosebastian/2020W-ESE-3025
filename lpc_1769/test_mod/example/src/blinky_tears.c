@@ -79,7 +79,7 @@ int main(void)
 	prvSetupHardware();
 	printf("............................\n");
 	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed1",
-				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
+				configMINIMAL_STACK_SIZE, 1, (tskIDLE_PRIORITY + 1UL),
 				(xTaskHandle *) NULL);
 
 //	xTaskCreate(vLEDTaskFunction, (signed char *) "vTaskLed2",
