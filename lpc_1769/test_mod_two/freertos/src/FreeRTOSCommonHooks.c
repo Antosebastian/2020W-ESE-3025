@@ -1,8 +1,8 @@
 /*
- * @brief Common SystemInit function for LPC17xx/40xx chips
+ * @brief Common FreeRTOS functions shared among platforms
  *
  * @note
- * Copyright 2013-2014, 2019 NXP
+ * Copyright(C) NXP Semiconductors, 2012
  * All rights reserved.
  *
  * @par
@@ -29,11 +29,11 @@
  * this code.
  */
 
- #if defined(NO_BOARD_LIB)
- #include "chip.h"
- #else
- #include "board.h"
- #endif
+#include "FreeRTOS.h"
+#include "task.h"
+#include "FreeRTOSCommonHooks.h"
+
+#include "chip.h"
 
 /*****************************************************************************
  * Private types/enumerations/variables
@@ -43,11 +43,6 @@
  * Public types/enumerations/variables
  ****************************************************************************/
 
-#if defined(NO_BOARD_LIB)
-const uint32_t OscRateIn = 12000000;
-const uint32_t RTCOscRateIn = 32768;
-#endif
-
 /*****************************************************************************
  * Private functions
  ****************************************************************************/
@@ -56,34 +51,44 @@ const uint32_t RTCOscRateIn = 32768;
  * Public functions
  ****************************************************************************/
 
-/* Set up and initialize hardware prior to call to main */
-void SystemInit(void)
+/* Delay for the specified number of milliSeconds */
+void FreeRTOSDelay(uint32_t ms)
 {
-	unsigned int *pSCB_VTOR = (unsigned int *) 0xE000ED08;
+	portTickType xDelayTime;
 
-#if defined(__IAR_SYSTEMS_ICC__)
-	extern void *__vector_table;
-
-	*pSCB_VTOR = (unsigned int) &__vector_table;
-#elif defined(__CODE_RED)
-	extern void *g_pfnVectors;
-
-	*pSCB_VTOR = (unsigned int) &g_pfnVectors;
-#elif defined(__ARMCC_VERSION)
-	extern void *__Vectors;
-
-	*pSCB_VTOR = (unsigned int) &__Vectors;
-#endif
-
-#if defined(__FPU_PRESENT) && __FPU_PRESENT == 1
-	fpuInit();
-#endif
-
-#if defined(NO_BOARD_LIB)
-	/* Chip specific SystemInit */
-	Chip_SystemInit();
-#else
-	/* Setup system clocking and muxing */
-	Board_SystemInit();
-#endif
+	xDelayTime = xTaskGetTickCount();
+	vTaskDelayUntil(&xDelayTime, ms);
 }
+
+/* FreeRTOS malloc fail hook */
+void vApplicationMallocFailedHook(void)
+{
+	DEBUGSTR("DIE:ERROR:FreeRTOS: Malloc Failure!\r\n");
+	taskDISABLE_INTERRUPTS();
+	for (;; ) {}
+}
+
+/* FreeRTOS application idle hook */
+void vApplicationIdleHook(void)
+{
+	/* Best to sleep here until next systick */
+	__WFI();
+}
+
+/* FreeRTOS stack overflow hook */
+void vApplicationStackOverflowHook(xTaskHandle pxTask, signed char *pcTaskName)
+{
+	(void) pxTask;
+	(void) pcTaskName;
+
+	DEBUGOUT("DIE:ERROR:FreeRTOS: Stack overflow in task %s\r\n", pcTaskName);
+	/* Run time stack overflow checking is performed if
+	   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2.  This hook
+	   function is called if a stack overflow is detected. */
+	taskDISABLE_INTERRUPTS();
+	for (;; ) {}
+}
+
+/* FreeRTOS application tick hook */
+void vApplicationTickHook(void)
+{}

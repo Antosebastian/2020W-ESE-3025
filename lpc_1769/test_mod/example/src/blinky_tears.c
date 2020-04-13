@@ -15,45 +15,47 @@ static void prvSetupHardware(void)
 static void vLEDTaskF(void *pvParameters)
 {
 //	char *pcTaskNumber;
-////	portTickType xLastWakeTime;
 //	pcTaskNumber = ( char * ) pvParameters;
+	portTickType xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
 
-		while (1) {
-			while((( char * ) pvParameters == 0))
-			{
+	while (1)
+	{
+		while (((char*) pvParameters == 0))
+		{
 			bool LedState = false;
 			Board_LED_Set(( char * ) pvParameters, LedState);
 			vTaskDelay(configTICK_RATE_HZ);
 			LedState = true;
 			Board_LED_Set(( char * ) pvParameters, LedState);
 			vTaskDelay(3 * configTICK_RATE_HZ + configTICK_RATE_HZ/2);
-			}
-			while((( char * ) pvParameters == 1))
-						{
-				bool LedState = true;
-						Board_LED_Set(( char * ) pvParameters, LedState);
-						vTaskDelay(3 * configTICK_RATE_HZ);
-						LedState = false;
-						Board_LED_Set(( char * ) pvParameters, LedState);
-						vTaskDelay(configTICK_RATE_HZ);
-						LedState = true;
-						Board_LED_Set(( char * ) pvParameters, LedState);
-						vTaskDelay(configTICK_RATE_HZ / 2);
-						}
-			while((( char * ) pvParameters == 2))
-						{
-						bool LedState = true;
-						Board_LED_Set(( char * ) pvParameters, LedState);
-						vTaskDelay(configTICK_RATE_HZ + configTICK_RATE_HZ/2);
-						LedState = false;
-						Board_LED_Set(( char * ) pvParameters, LedState);
-						vTaskDelay(configTICK_RATE_HZ);
-						LedState = true;
-						Board_LED_Set(2, LedState);
-						vTaskDelay(2 * configTICK_RATE_HZ);
-						}
-
 		}
+		while((( char * ) pvParameters == 1))
+		{
+			bool LedState = true;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelay(3 * configTICK_RATE_HZ);
+			LedState = false;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelay(configTICK_RATE_HZ);
+			LedState = true;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelay(configTICK_RATE_HZ / 2);
+		}
+		while((( char * ) pvParameters == 2))
+		{
+			bool LedState = true;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelay(configTICK_RATE_HZ + configTICK_RATE_HZ/2);
+			LedState = false;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelay(configTICK_RATE_HZ);
+			LedState = true;
+			Board_LED_Set(2, LedState);
+			vTaskDelay(2 * configTICK_RATE_HZ);
+		}
+
+	}
 }
 
 //static void vLEDTask2(void *pvParameters) {
@@ -91,7 +93,7 @@ int main(void)
 	prvSetupHardware();
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
-				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 3UL),
+				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
 				(xTaskHandle *) NULL);
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
@@ -99,7 +101,7 @@ int main(void)
 				(xTaskHandle *) NULL);
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
-					configMINIMAL_STACK_SIZE, 2, (tskIDLE_PRIORITY + 2UL),
+					configMINIMAL_STACK_SIZE, 2, (tskIDLE_PRIORITY + 1UL),
 					(xTaskHandle *) NULL);
 
 	vTaskStartScheduler();
