@@ -25,34 +25,34 @@ static void vLEDTaskF(void *pvParameters)
 		{
 			bool LedState = false;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(configTICK_RATE_HZ);
+			vTaskDelayUntil( &xLastWakeTime, 1000);
 			LedState = true;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(3 * configTICK_RATE_HZ + configTICK_RATE_HZ/2);
+			vTaskDelayUntil( &xLastWakeTime, 3500);
 		}
 		while((( char * ) pvParameters == 1))
 		{
 			bool LedState = true;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(3 * configTICK_RATE_HZ);
+			vTaskDelayUntil( &xLastWakeTime, 3000);
 			LedState = false;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(configTICK_RATE_HZ);
+			vTaskDelayUntil( &xLastWakeTime, 1000);
 			LedState = true;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(configTICK_RATE_HZ / 2);
+			vTaskDelayUntil( &xLastWakeTime, 500);
 		}
 		while((( char * ) pvParameters == 2))
 		{
 			bool LedState = true;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(configTICK_RATE_HZ + configTICK_RATE_HZ/2);
+			vTaskDelayUntil( &xLastWakeTime, 1500);
 			LedState = false;
 			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelay(configTICK_RATE_HZ);
+			vTaskDelayUntil( &xLastWakeTime, 1000);
 			LedState = true;
 			Board_LED_Set(2, LedState);
-			vTaskDelay(2 * configTICK_RATE_HZ);
+			vTaskDelayUntil( &xLastWakeTime, 2000);
 		}
 
 	}
@@ -93,11 +93,11 @@ int main(void)
 	prvSetupHardware();
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
-				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 1UL),
+				configMINIMAL_STACK_SIZE, 0, (tskIDLE_PRIORITY + 3UL),
 				(xTaskHandle *) NULL);
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
-				configMINIMAL_STACK_SIZE, 1, (tskIDLE_PRIORITY + 1UL),
+				configMINIMAL_STACK_SIZE, 1, (tskIDLE_PRIORITY + 2UL),
 				(xTaskHandle *) NULL);
 
 	xTaskCreate(vLEDTaskF, (signed char *) "vTaskLed1",
@@ -108,3 +108,5 @@ int main(void)
 
 	return 1;
 }
+
+
