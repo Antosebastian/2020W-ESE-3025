@@ -21,10 +21,6 @@ static void vLEDTaskF(void *pvParameters)
 		for(pvParameters = 0; pvParameters < 3; pvParameters++)
 		{
 //			vTaskDelayUntil( &xLastWakeTime, 1000);
-			Board_LED_Set(( char * ) pvParameters, false);
-			vTaskDelayUntil( &xLastWakeTime, 1000);
-			Board_LED_Set(( char * ) pvParameters, true);
-			vTaskDelayUntil( &xLastWakeTime, 500);
 
 		}
 	}
