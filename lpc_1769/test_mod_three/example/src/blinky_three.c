@@ -18,12 +18,15 @@ static void vLEDTaskF(void *pvParameters)
 	xLastWakeTime = xTaskGetTickCount();
 	while (1)
 	{
-			bool LedState = false;
-			Board_LED_Set(( char * ) pvParameters, LedState);
+		for(pvParameters = 0; pvParameters < 3; pvParameters++)
+		{
+//			vTaskDelayUntil( &xLastWakeTime, 1000);
+			Board_LED_Set(( char * ) pvParameters, false);
 			vTaskDelayUntil( &xLastWakeTime, 1000);
-			LedState = true;
-			Board_LED_Set(( char * ) pvParameters, LedState);
-			vTaskDelayUntil( &xLastWakeTime, 3500);
+			Board_LED_Set(( char * ) pvParameters, true);
+			vTaskDelayUntil( &xLastWakeTime, 500);
+
+		}
 	}
 }
 
