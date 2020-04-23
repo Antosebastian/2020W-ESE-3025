@@ -14,17 +14,17 @@ static void prvSetupHardware(void)
 
 static void vLEDTaskF(void *pvParameters)
 {
-//	portTickType xLastWakeTime;
-//	xLastWakeTime = xTaskGetTickCount();
-//	while (1)
-//	{
-//			bool LedState = false;
-//			Board_LED_Set(( char * ) pvParameters, LedState);
-//			vTaskDelayUntil( &xLastWakeTime, 1000);
-//			LedState = true;
-//			Board_LED_Set(( char * ) pvParameters, LedState);
-//			vTaskDelayUntil( &xLastWakeTime, 3500);
-//	}
+	portTickType xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+	while (1)
+	{
+			bool LedState = false;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelayUntil( &xLastWakeTime, 1000);
+			LedState = true;
+			Board_LED_Set(( char * ) pvParameters, LedState);
+			vTaskDelayUntil( &xLastWakeTime, 3500);
+	}
 }
 
 int main(void)
